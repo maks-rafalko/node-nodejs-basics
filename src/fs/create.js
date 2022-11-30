@@ -1,17 +1,8 @@
-import { access, constants, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import * as url from 'node:url';
+import { fileExists } from './fsFunctions.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
-const fileExists = async (filePath) => {
-    try {
-        await access(filePath, constants.F_OK);
-
-        return true;
-    } catch {
-        return false;
-    }
-}
 
 const create = async () => {
     const filePath = __dirname + 'files/fresh.txt';
