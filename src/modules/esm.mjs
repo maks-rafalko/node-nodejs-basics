@@ -3,6 +3,8 @@ import { release, version } from 'node:os';
 import { createServer as createServerHttp } from 'node:http';
 import './files/c.js';
 import * as url from 'node:url';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -12,9 +14,9 @@ const random = Math.random();
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = (await import('./files/a.json', { assert: { type: 'json' } })).default;
+    unknownObject = require('./files/a.json');
 } else {
-    unknownObject = (await import('./files/b.json', { assert: { type: 'json' } })).default;
+    unknownObject = require('./files/b.json');
 }
 
 console.log(`Release ${release()}`);
