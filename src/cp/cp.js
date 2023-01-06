@@ -1,6 +1,13 @@
+import * as url from 'node:url';
+import path from 'node:path';
+import { fork } from 'node:child_process';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 const spawnChildProcess = async (args) => {
-    // Write your code here
+    const processPath = path.join(__dirname, 'files', 'script.js');
+
+    fork(processPath, args, { stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
 };
 
-// Put your arguments in function call to test this functionality
-spawnChildProcess( /* [someArgument1, someArgument2, ...] */);
+spawnChildProcess(['firstArg', 'secondArg']);
